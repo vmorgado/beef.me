@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Beef.me</title>
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <!-- App CSS -->
+    <link rel="stylesheet" href="app.css">
+</head> 
+
+<body>
+    <div id="app" class="container-fluid">
+        {{message}}
+        <div id="page" class="container-fluid">
+            <router-view></router-view>
+        </div>
+    </div>
+    <script data-main="app.js" src="node_modules/requirejs/require.js"></script>
+</body>
+
+</html>

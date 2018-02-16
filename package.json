@@ -1,0 +1,30 @@
+{
+  "name": "beef.me",
+  "version": "1.0.0",
+  "description": "beef me or i kill you",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vmorgado/beef.me.git"
+  },
+  "keywords": [
+    "beef",
+    "me"
+  ],
+  "author": "BATCAVE",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vmorgado/beef.me/issues"
+  },
+  "homepage": "https://github.com/vmorgado/beef.me#readme",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.3.1",
+    "requirejs": "^2.3.5",
+    "vue": "^2.5.13",
+    "vue-router": "^3.0.1"
+  }
+}
