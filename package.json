@@ -22,6 +22,7 @@
   "homepage": "https://github.com/vmorgado/beef.me#readme",
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "firebase": "^4.10.0",
     "jquery": "^3.3.1",
     "requirejs": "^2.3.5",
     "vue": "^2.5.13",

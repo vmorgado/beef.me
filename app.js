@@ -13,7 +13,8 @@ requirejs.config({
         vue: '../node_modules/vue/dist/vue',
         vuerouter: '../node_modules/vue-router/dist/vue-router',
         jquery: '../node_modules/jquery/dist/jquery',
-        bootstrap: '../node_modules/bootstrap/dist/js/bootstrap'
+        bootstrap: '../node_modules/bootstrap/dist/js/bootstrap',
+        firebase:'../node_modules/firebase/firebase'
     }
 });
 
@@ -23,8 +24,8 @@ requirejs.config({
 var data;
 require(['fake-data'], function(fakeData) {
     data = fakeData;
-    requirejs(['jquery', 'bootstrap', 'vue', 'vuerouter','main'], 
-    function(jQuery, bootstrap, Vue, VueRouter, app) {        
+    requirejs(['jquery', 'bootstrap', 'vue', 'vuerouter', 'firebase','main'], 
+    function(jQuery, bootstrap, Vue, VueRouter, Firebase, app) {
         jQuery(document).ready(function(event) {
             app.$mount('#app');
         });
