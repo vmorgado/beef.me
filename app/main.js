@@ -7,6 +7,7 @@ define('main', function (require) {
     Vue.use(VueRouter);
     
     var router = require('router');
+    router.push('/dashboard');        
 
     return new Vue({
         router: router,
