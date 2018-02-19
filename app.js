@@ -20,12 +20,25 @@ requirejs.config({
 
 // Start loading the main app file. Put all of
 // your application logic in there.
-
 var data;
-require(['fake-data'], function(fakeData) {
+var database;
+var firebaseApp;
+require(['fake-data', 'firebase', 'firebase-app'], function(fakeData) {
+    //fake data object for now
     data = fakeData;
-    requirejs(['jquery', 'bootstrap', 'vue', 'vuerouter', 'firebase','main'], 
-    function(jQuery, bootstrap, Vue, VueRouter, Firebase, app) {
+    //init firebase stuff 
+    firebaseApp = require('firebase-app');
+    database = firebase.database();
+    
+    var beefRef = firebase.database().ref().child('text');
+    beefRef.on('value', snap => data.text = snap.val());
+    
+    var beefRef = firebase.database().ref().child('beefs');
+    beefRef.on('value', function (snap) {
+        data.beefs = snap.val();
+    });
+    requirejs(['jquery', 'bootstrap', 'vue', 'vuerouter','main'], 
+    function(jQuery, bootstrap, Vue, VueRouter, app) {        
         jQuery(document).ready(function(event) {
             app.$mount('#app');
         });

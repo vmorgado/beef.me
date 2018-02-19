@@ -2,13 +2,10 @@ define('main', function (require) {
     
     var Vue = require('vue');
     var VueRouter = require('vuerouter');
-    console.log(data);
-
     Vue.use(VueRouter);
     
     var router = require('router');
-    router.push('/dashboard');        
-
+    router.push('/dashboard');
     return new Vue({
         router: router,
         data: data,

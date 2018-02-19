@@ -1,24 +1,18 @@
 define('pages', function (require) {
+    var a = require('beef-component');
     return {
         dashboard: {
             template: `<div id="dashboard">
-                            <div id="message"> 
-                                message: {{message}} 
-                            </div>
+                            <beef-component></beef-component>
                             <div id="synced">
                                 Texto em tempo real da db.
-                                <h3 id="messageSynced">0</h3>
+                                <h3>{{text}}</h3>
                             </div>
                        </div>`,
             data: function () {
                 return data;
             },
             mounted: function () {
-                var app = require('firebase-app');
-                var messageSynced = document.getElementById("messageSynced");
-                var dbRef = firebase.database().ref().child('text');
-                dbRef.on('value', snap => messageSynced.innerText = snap.val());
-                
             },
             methods: {
                 greet: function (event) {
