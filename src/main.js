@@ -17,10 +17,6 @@ jQuery.noConflict()
 var data = fakeData
 // init firebase stuff
 firebase.initializeApp(firebaseConfig)
-var beefRef = firebase.database().ref().child('text')
-beefRef.on('value', function (snap) {
-  data.beefs = snap.val()
-})
 
 var beefRef2 = firebase.database().ref().child('beefs')
 beefRef2.on('value', function (snap) {
