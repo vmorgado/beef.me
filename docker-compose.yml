@@ -1,0 +1,24 @@
+version: '2'
+services:
+  myapp-data:
+    build: docker/busybox
+    volumes: 
+      - ./api/src:/home/beef.me
+  db:
+    environment:
+      MYSQL_DATABASE: beefme
+      MYSQL_PASSWORD: beef
+      MYSQL_ROOT_PASSWORD: beef
+      MYSQL_USER: beef
+    ports: 
+      - 3306:3306
+    image: mysql:5.7
+    volumes:
+      - ./api/mysql:/var/lib/mysql
+  app:
+    build: docker/python
+    ports:
+      - 5000:5000
+    volumes: 
+      - ./api/src:/home/beef.me
+      
