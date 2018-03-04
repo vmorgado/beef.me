@@ -4,7 +4,6 @@ import falcon
 class HelloWorldResource:
     def on_get(self, request, response):
         response.media = ('Hello World from Falcon API')
-
 class BeefResource:
     def on_get(self, request, response):
         response.media = ('beef')
