@@ -15,7 +15,7 @@ import * as firebase from 'firebase'
 var data = { text: 'hola' }
 
 export default {
-  name: 'Dashboard',
+  name: 'dashboard-component',
   components: { BeefComponent },
   data () {
     return data

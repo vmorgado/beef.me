@@ -2,17 +2,30 @@
   <div class="panel panel-default col-xs-12">
       <div class="panel-body">
           {{msg}}
+          <input type="file" accept="audio/*" capture id="recorder">
+          <audio id="player" controls></audio>
       </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'beef-component',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Audio Record Example'
     }
+  },
+  mounted () {
+    var player = document.getElementById('player')
+    var handleSuccess = function (stream) {
+      if (window.URL) {
+        player.src = window.URL.createObjectURL(stream)
+      } else {
+        player.src = stream
+      }
+    }
+    navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(handleSuccess)
   }
 }
 </script>
