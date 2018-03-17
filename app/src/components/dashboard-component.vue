@@ -1,16 +1,13 @@
 <template>
-  <div id='dashboard'>
-      <beef-component></beef-component>
-      <div id='synced'>
-          Texto em tempo real da db.
-          <h3>{{text}}</h3>
-      </div>
-  </div>
+    <div class='beef'>
+      <div class='play-btn'></div>
+      <div class='beef-info'></div>
+      <div class='beef-props'></div>
+    </div>
 </template>
 
 <script>
 import BeefComponent from './beef-component'
-import * as firebase from 'firebase'
 
 var data = { text: 'hola' }
 
@@ -22,32 +19,32 @@ export default {
   },
   created () {
     console.log('created')
-    var beefRef = firebase
-      .database()
-      .ref()
-      .child('text')
-    beefRef.on('value', function (snap) {
-      data.text = snap.val()
-    })
   }
 }
 </script>
 
 <!-- Add 'scoped' attribute to limit CSS to this component only -->
 <style scoped>
-h1,
-h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+  .beef {
+    border: 1px solid #ccc;
+    padding: 15px;
+    height: 100px;
+  }
+  .play-btn {
+    float: left;
+    background-color: green;
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+  }
+  .beef-info {
+    float: left;
+    background-color: red;
+    width: 300px;
+    height: 100px;
+    margin-left: 15px;
+  }
+  .beef-props {
+
+  }
 </style>
