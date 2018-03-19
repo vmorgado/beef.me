@@ -1,10 +1,17 @@
 <template>
   <div id='test-page'>
-      <beef-component></beef-component>
-      <div id='synced'>
-          Texto em tempo real da db.
-          <h3>{{text}}</h3>
-      </div>
+    <div class="panel panel-default col-xs-12">
+        <div class="panel-body">
+            {{msg}}
+            <input type="file" accept="audio/*" capture id="recorder">
+            <audio id="player" controls></audio>
+        </div>
+    </div>
+    <beef-component></beef-component>
+    <div id='synced'>
+        Texto em tempo real da db.
+        <h3>{{text}}</h3>
+    </div>
   </div>
 </template>
 
@@ -18,7 +25,21 @@ export default {
   name: 'test-page-component',
   components: { BeefComponent },
   data () {
-    return data
+    return {
+      msg: 'Audio Record Example',
+      text: 'hola'
+    }
+  },
+  mounted () {
+    var player = document.getElementById('player')
+    var handleSuccess = function (stream) {
+      if (window.URL) {
+        player.src = window.URL.createObjectURL(stream)
+      } else {
+        player.src = stream
+      }
+    }
+    navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(handleSuccess)
   },
   created () {
     console.log('created')

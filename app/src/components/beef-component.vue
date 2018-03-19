@@ -1,11 +1,9 @@
 <template>
-  <div class="panel panel-default col-xs-12">
-      <div class="panel-body">
-          {{msg}}
-          <input type="file" accept="audio/*" capture id="recorder">
-          <audio id="player" controls></audio>
-      </div>
-  </div>
+    <div class='beef'>
+      <div class='play-btn'></div>
+      <div class='beef-info'></div>
+      <div class='beef-props'></div>
+    </div>
 </template>
 
 <script>
@@ -15,35 +13,32 @@ export default {
     return {
       msg: 'Audio Record Example'
     }
-  },
-  mounted () {
-    var player = document.getElementById('player')
-    var handleSuccess = function (stream) {
-      if (window.URL) {
-        player.src = window.URL.createObjectURL(stream)
-      } else {
-        player.src = stream
-      }
-    }
-    navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(handleSuccess)
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+.beef {
+    border: 1px solid #ccc;
+    padding: 15px;
+    height: 100px;
+  }
+  .play-btn {
+    float: left;
+    background-color: green;
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+  }
+  .beef-info {
+    float: left;
+    background-color: red;
+    width: 300px;
+    height: 100px;
+    margin-left: 15px;
+  }
+  .beef-props {
+
+  }
 </style>
