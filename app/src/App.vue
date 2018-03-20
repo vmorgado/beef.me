@@ -47,8 +47,15 @@
             <b-button href="#" variant="primary">Go somewhere</b-button>
           </b-card>
         </b-col>
-        <b-col cols="9">
+        <b-col cols="6">
           <router-view/>
+        </b-col>
+        <b-col>
+          <b-card border-variant="light"
+            header="Hashtahs + pub"
+            class="text-center">
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </b-card>
         </b-col>
       </b-row>
     </b-container>

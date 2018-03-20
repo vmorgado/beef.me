@@ -1,9 +1,9 @@
 <template>
-    <div class='beef'>
-      <div class='play-btn'></div>
-      <div class='beef-info'></div>
-      <div class='beef-props'></div>
-    </div>
+    <b-card border-variant="light"
+            header="Light"
+            class="text-center">
+      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </b-card>
 </template>
 
 <script>
@@ -22,14 +22,14 @@ export default {
 .beef {
     border: 1px solid #ccc;
     padding: 15px;
-    height: 100px;
+    height: 135px;
   }
   .play-btn {
     float: left;
     background-color: green;
     width: 100px;
     height: 100px;
-    border-radius: 100px;
+    border-radius: 130px;
   }
   .beef-info {
     float: left;
@@ -39,6 +39,9 @@ export default {
     margin-left: 15px;
   }
   .beef-props {
-
+    background-color: purple;
+    width: 40px;
+    height: 40px;
+    float: right;
   }
 </style>
