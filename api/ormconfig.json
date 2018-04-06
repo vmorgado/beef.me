@@ -6,7 +6,7 @@
     "password": "beef",
     "database": "beefme",
     "entities": [
-        "src/entities/**.entity{.ts,.js}"
+        "src/**/**.entity{.ts,.js}"
     ],
     "synchronize": true
 }

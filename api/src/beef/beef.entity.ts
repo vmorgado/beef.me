@@ -5,12 +5,6 @@ export class Beef {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 500 })
-  name: string;
-
-  @Column('text')
-  description: string;
-
   @Column()
   filename: string;
 
@@ -19,6 +13,9 @@ export class Beef {
 
   @Column('int')
   props: number;
+
+  @Column('int')
+  createdOn: string;
 
   @Column()
   isPublished: boolean;
