@@ -16,4 +16,7 @@ export class BeefService {
   async findAll(): Promise<Beef[]> {
     return await this.beefRepository.find();
   }
+  async findOne(id: number): Promise<Beef> {
+    return await this.beefRepository.findOneById(id);
+  }
 }

@@ -3,7 +3,7 @@ import { BeefService } from './beef.service';
 import { Repository } from 'typeorm';
 import { Beef } from './beef.entity';
 
-describe('BeefController', () => {
+describe('BeefService', () => {
   let beefService: BeefService;
   let beefRepository: Repository<Beef>;
 

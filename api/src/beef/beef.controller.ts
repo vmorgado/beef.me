@@ -9,9 +9,10 @@ export class BeefController {
   async findAll(): Promise<Beef[]> {
     return this.beefService.findAll();
   }
+
   @Get(':id')
-  findOne(@Param() params) {
-    return { yo: 'yo'};
+  async findOne(@Param() params) {
+    return this.beefService.findOne(params.id);
   }
 
   @Post()

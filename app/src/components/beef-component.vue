@@ -1,11 +1,14 @@
 <template>
-    <b-card border-variant="light"
-            header="Light"
-            class="text-center">
-      <p class="card-text">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      </p>
-    </b-card>
+  <div>
+    <b-card>
+      <div class="play-btn">
+      </div>
+      <div class="beef-info">
+        <p>From user to user</p>
+        <p>beefid</p>
+      </div>
+     </b-card>
+  </div>
 </template>
 
 <script>
@@ -21,17 +24,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.beef {
-    border: 1px solid #ccc;
-    padding: 15px;
-    height: 135px;
-  }
   .play-btn {
     float: left;
     background-color: green;
-    width: 100px;
-    height: 100px;
-    border-radius: 130px;
+    width: 80px;
+    height: 80px;
   }
   .beef-info {
     float: left;
