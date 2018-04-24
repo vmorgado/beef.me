@@ -35,7 +35,7 @@
       <b-row class="text-center">
         <b-col>
           <b-card title="UserMenu"
-                  img-src="https://lorempixel.com/600/300/food/5/"
+                  img-src="../assets/userunknown.png"
                   img-alt="Image"
                   img-top
                   tag="article"

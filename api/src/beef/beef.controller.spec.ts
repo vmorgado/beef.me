@@ -17,15 +17,21 @@ describe('BeefController', () => {
   describe('findAll', () => {
     it('should return an array of beefs', async () => {
       const result = [];
-      jest.spyOn(beefService, 'findAll').mockImplementation(() => result);
+      const findAllMock = jest.spyOn(beefService, 'findAll').mockImplementation(() => result);
       expect(await beefController.findAll()).toBe(result);
+      expect(findAllMock).toHaveBeenCalled();
     });
   });
   describe('findOne', () => {
-    it('should return an array of beefs', async () => {
-      const result = { beef: 'one'};
-      jest.spyOn(beefService, 'findOne').mockImplementation(() => result);
-      expect(await beefController.findOne(1)).toBe(result);
+    it('should return one beef', async () => {
+      const findOneMock = jest.spyOn(beefService, 'findOne').mockImplementation((id) => {
+        const beef = new Beef();
+        beef.id = id;
+        return beef;
+      });
+      const result = await beefController.findOne(1);
+      // expect(result.id).toBe(1);
+      expect(findOneMock).toHaveBeenCalled();
     });
   });
   describe('create', () => {
