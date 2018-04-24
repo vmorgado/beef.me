@@ -14,7 +14,7 @@ export class Beef {
   @Column('int')
   props: number;
 
-  @Column('int')
+  @Column('date')
   createdOn: string;
 
   @Column()
