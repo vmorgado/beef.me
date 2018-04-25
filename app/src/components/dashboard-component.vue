@@ -1,19 +1,16 @@
 <template>
   <div>
     <beef-component></beef-component>
-    <record-component></record-component>
   </div>
 </template>
 
 <script>
 import BeefComponent from './beef-component'
-import RecordComponent from './record-component'
-
 var data = { text: 'hola' }
 
 export default {
   name: 'dashboard-component',
-  components: { BeefComponent, RecordComponent },
+  components: { BeefComponent },
   data () {
     return data
   },
