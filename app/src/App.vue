@@ -1,18 +1,8 @@
 <template>
   <div id="app">
     <navbar-component></navbar-component>
-    <b-container fluid class="paddingtop">
-      <b-row class="text-center">
-        <b-col>
-          <user-menu-component></user-menu-component>
-        </b-col>
-        <b-col cols="6">
-          <router-view/>
-        </b-col>
-        <b-col>
-          <hashtags-component></hashtags-component>
-        </b-col>
-      </b-row>
+    <b-container fluid style="min-height: 100vh;">
+      <router-view/>
     </b-container>
   </div>
 </template>
@@ -29,11 +19,18 @@ export default {
     return {
       user: 'Telhas Noob'
     }
+  },
+  created () {
+    var app = document.getElementById('app')
+    console.log(app)
   }
 }
 </script>
 <style scoped>
   .paddingtop {
     padding-top: 15px;
+  }
+  #app {
+    height: auto;
   }
 </style>

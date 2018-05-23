@@ -11,7 +11,6 @@
     <div id='synced'>
         Texto em tempo real da db.
         <h3>{{text}}</h3>
-
         <button id="record">Record</button>
     </div>
   </div>
@@ -20,10 +19,10 @@
 <script>
 import BeefComponent from './beef-component'
 import Recorder from './../logic/recorder'
+// import BeefGenerator from './../logic/beef-generator'
 import * as firebase from 'firebase'
 
-var data = { chunks: [] }
-
+var data = {text: 'hola'}
 export default {
   name: 'test-page-component',
   components: { BeefComponent },
@@ -42,46 +41,16 @@ export default {
         Recorder.getStream().then((stream) => {
           Recorder.record(Recorder.getMediaRecorder(stream)).then((record) => {
             recordBtn.style.color = 'black'
-            player.src = Recorder.getAudioUrl(Recorder.getSoundBlob(record))
+            var blob = Recorder.getSoundBlob(record)
+            player.src = Recorder.getAudioUrl(blob)
           })
         })
       }
     } else {
       console.log('cannot start recorder in the browser')
     }
-    // if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-    //   var stream = navigator.mediaDevices.getUserMedia({ audio: true, video: false })
-    //   recorder.onclick = function () {
-    //     stream.then((stream) => {
-    //       var mediaRecorder = new MediaRecorder(stream)
-    //       mediaRecorder.start(10000)
-    //       console.log(mediaRecorder.state)
-
-    //       mediaRecorder.ondataavailable = function (e) {
-    //         if (mediaRecorder.state !== 'inactive') {
-    //           console.log(mediaRecorder.state)
-    //           console.log(data.chunks)
-    //           mediaRecorder.stop()
-    //         }
-    //         data.chunks.push(e.data)
-    //       }
-    //       mediaRecorder.onstop = function (e) {
-    //         console.log('recorder stopped')
-    //         var blob = new Blob(data.chunks, { 'type': 'audio/ogg; codecs=opus' })
-    //         data.chunks = []
-    //         var audioURL = window.URL.createObjectURL(blob)
-    //         player.src = audioURL
-    //         recorder.style.color = 'black'
-    //       }
-    //     })
-    //     recorder.style.color = 'red'
-    //   }
-    // } else {
-    //   console.log('getUserMedia not supported on your browser!')
-    // }
   },
   created () {
-    console.log('created')
     var beefRef = firebase
       .database()
       .ref()
