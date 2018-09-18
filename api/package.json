@@ -52,7 +52,7 @@
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "coverageDirectory": "../coverage",
-    "notify":true,
+    "notify": true,
     "verbose": true
   }
 }
