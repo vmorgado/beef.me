@@ -17,13 +17,18 @@ model User {
   name         String?
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
+  beefs        Beef[]
+  followers    Follower[]    @relation("followers")
+  following    Follower[]    @relation("following")
 }
 
 model Follower {
-  user         User          @relation(fields: [userId], references: [id])
-  userId       String
-  follow       User          @relation(fields: [followId], references: [id])
-  followId     String
+  user         User          @relation(name: "followers", fields: [userId], references: [id])
+  userId       String        @db.Uuid
+  follow       User          @relation(name: "following", fields: [followId], references: [id])
+  followId     String        @db.Uuid
+  @@unique([userId, followId])
+
 }
 
 model Beef {
@@ -31,8 +36,7 @@ model Beef {
   content      String?
   published    Boolean?      @default(false)
   author       User          @relation(fields: [authorId], references: [id])
-  authorId     String
-
+  authorId     String        @db.Uuid
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
 }

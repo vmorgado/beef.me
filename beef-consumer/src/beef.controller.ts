@@ -1,7 +1,6 @@
 
-import { Controller, Get, Inject, OnApplicationShutdown, OnModuleInit } from '@nestjs/common';
-import { ClientKafka, Ctx, EventPattern, KafkaContext, MessagePattern, Payload } from '@nestjs/microservices';
-import { BeefService } from './beef.service';
+import { Controller } from '@nestjs/common';
+import { Ctx, KafkaContext, MessagePattern, Payload } from '@nestjs/microservices';
 
 @Controller()
 export class BeefController {
