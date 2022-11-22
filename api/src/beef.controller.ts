@@ -3,7 +3,6 @@ import { Body, Controller, Get, Inject, OnApplicationShutdown, OnModuleInit, Pos
 import { ClientKafka } from '@nestjs/microservices';
 import { CompressionTypes, IHeaders } from '@nestjs/microservices/external/kafka.interface';
 import { Producer } from '@nestjs/microservices/external/kafka.interface';
-import { BeefService } from './beef.service';
 
 class CreateBeefDto {
 
@@ -16,9 +15,7 @@ export class BeefController implements OnModuleInit, OnApplicationShutdown {
   constructor(
     @Inject('BEEF_SERVICE')
     private readonly beefKafka: ClientKafka,
-    private readonly beefService: BeefService
-  ) {
-  }
+  ) {}
   async onApplicationShutdown(signal?: string) {
     await this.producer.disconnect();
   }

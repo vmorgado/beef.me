@@ -6,11 +6,14 @@ services:
   #   volumes:
   #     - ./feed-consumer:/app
   #   command: ["npm", "run", "start:dev"]
-  beef-consumer:
-    image: node:18-buster
+  domain-service:
+    build:
+      context: .
+      dockerfile: ./domain-service/Dockerfile
     working_dir: /app
     volumes:
-      - ./beef-consumer:/app
+      - ./domain-service:/app
+      - /app/node_modules
     command: ["npm", "run", "start:dev"]
   api:
     image: node:18-buster
@@ -26,6 +29,9 @@ services:
       - POSTGRES_PASSWORD=changeme
       - POSTGRES_USER=beef
       - POSTGRES_DB=beefme
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    volumes:
+      - ./data/database:/var/lib/postgresql/data
     ports:
       - "5432:5432"
   mongo:

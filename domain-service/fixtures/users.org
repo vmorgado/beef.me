@@ -1,0 +1,31 @@
+#+title: Users
+
+* Test User:
+
+#+begin_src sql
+
+INSERT INTO public."User" (email, handler, name) VALUES ('vitor.morgado@gmx.de', 'vmorgado', 'Vitor Morgado');
+
+#+end_src
+
+#+RESULTS:
+: Records affected: 1
+
+
+
+#+begin_src sql
+
+SELECT id FROM public."User";
+
+SELECT * FROM public."Beef";
+#+end_src
+
+#+RESULTS:
+: | id                                   |
+: |--------------------------------------|
+: | b5cf8941-d987-418f-bde7-1f0ea4249dee |
+: | id                             | content     | published | authorid                       | createdat               | updatedat               |
+: |--------------------------------+-------------+-----------+--------------------------------+-------------------------+-------------------------|
+: | 8198c4c4-3b7e-4094-878f-7ef... | Hello World | true      | b5cf8941-d987-418f-bde7-1f0... | 2022-11-21 22:15:36.317 | 2022-11-21 22:15:36.317 |
+: | 31072819-eefe-4a61-bf87-c7a... | Hello World | true      | b5cf8941-d987-418f-bde7-1f0... | 2022-11-21 22:15:36.376 | 2022-11-21 22:15:36.376 |
+: | 49d978d9-4c6f-43a6-af95-cb9... | Hello World | true      | b5cf8941-d987-418f-bde7-1f0... | 2022-11-21 22:17:16.647 | 2022-11-21 22:17:16.647 |
