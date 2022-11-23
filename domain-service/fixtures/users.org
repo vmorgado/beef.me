@@ -2,6 +2,7 @@
 
 * Test User:
 
+** Insert User in Database:
 #+begin_src sql
 
 INSERT INTO public."User" (email, handler, name) VALUES ('vitor.morgado@gmx.de', 'vmorgado', 'Vitor Morgado');
@@ -13,17 +14,100 @@ INSERT INTO public."User" (email, handler, name) VALUES ('vitor.morgado@gmx.de',
 
 
 
+** POST USER to API
+#+begin_src http :pretty
+POST http://localhost:3000/user
+Content-Type: application/json
+
+{
+  "email": "test@email.com",
+  "handler": "test-handler",
+  "name": "John Doe"
+}
+#+end_src
+
+#+RESULTS:
+#+begin_example
+[
+  {
+    "topicName": "user.create",
+    "partition": 0,
+    "errorCode": 0,
+    "baseOffset": "14",
+    "logAppendTime": "-1",
+    "logStartOffset": "0"
+  }
+]
+#+end_example
+
+
+#+begin_src sql
+    DELETE FROM public."User" WHERE email = 'test@email.com';
+#+end_src
+
+#+RESULTS:
+: Records affected: 1
+
+
+** POST a Beef
+#+begin_src http :pretty
+POST http://localhost:3000/beef
+#+end_src
+
+#+RESULTS:
+#+begin_example
+[
+  {
+    "topicName": "beef.create",
+    "partition": 0,
+    "errorCode": 0,
+    "baseOffset": "3",
+    "logAppendTime": "-1",
+    "logStartOffset": "0"
+  }
+]
+#+end_example
+
+** Get User to API
+
+#+begin_src http :pretty
+GET localhost:3000/beef
+Accept: text/html
+
+#+end_src
+
+#+RESULTS:
+#+begin_example
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title></title>
+</head>
+<body>
+  HELLO
+</body>
+</html>
+#+end_example
+
+
+
+
+** List Users in Database
+
 #+begin_src sql
 
-SELECT id FROM public."User";
+SELECT * FROM public."User";
 
 SELECT * FROM public."Beef";
 #+end_src
 
 #+RESULTS:
-: | id                                   |
-: |--------------------------------------|
-: | b5cf8941-d987-418f-bde7-1f0ea4249dee |
+: | id                             | email                | handler      | name          | createdat               | updatedat               |
+: |--------------------------------+----------------------+--------------+---------------+-------------------------+-------------------------|
+: | b5cf8941-d987-418f-bde7-1f0... | vitor.morgado@gmx.de | vmorgado     | Vitor Morgado | 2022-11-21 22:34:18.276 | 2022-11-21 22:34:18.276 |
+: | e53f95d2-bca8-472a-b35b-aeb... | test@email.com       | test-handler | John Doe      | 2022-11-22 22:26:29.399 | 2022-11-22 22:26:29.399 |
 : | id                             | content     | published | authorid                       | createdat               | updatedat               |
 : |--------------------------------+-------------+-----------+--------------------------------+-------------------------+-------------------------|
 : | 8198c4c4-3b7e-4094-878f-7ef... | Hello World | true      | b5cf8941-d987-418f-bde7-1f0... | 2022-11-21 22:15:36.317 | 2022-11-21 22:15:36.317 |

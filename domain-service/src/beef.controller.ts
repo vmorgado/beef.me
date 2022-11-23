@@ -8,19 +8,19 @@ export class BeefController {
   constructor(
     private prisma: PrismaService
   ) {}
-  @MessagePattern('beef')
+  @MessagePattern('beef.create')
   async newBeef(@Payload() message: any, @Ctx() context: KafkaContext): Promise<void> {
 
-    console.log('message', message);
-    const result = await this.prisma.beef.create({
-      data: {
-        content: 'Hello World',
-        published: true,
-        authorId: 'b5cf8941-d987-418f-bde7-1f0ea4249dee'
-      }
-    });
+    console.log('message', message.value);
+    // const result = await this.prisma.beef.create({
+    //   data: {
+    //     content: 'Hello World',
+    //     published: true,
+    //     authorId: 'b5cf8941-d987-418f-bde7-1f0ea4249dee'
+    //   }
+    // });
 
-    console.log(result);
+    // console.log(result);
 
   }
 

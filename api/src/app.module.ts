@@ -1,12 +1,15 @@
-import { Module } from '@nestjs/common';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { BeefController } from './beef.controller';
+import { Module, OnApplicationShutdown, OnModuleInit } from '@nestjs/common';
+import { ModuleRef } from '@nestjs/core';
+import { ClientKafka, ClientsModule, Transport } from '@nestjs/microservices';
+import { Producer } from '@nestjs/microservices/external/kafka.interface';
+import { BeefController } from './beef.controler';
+import { UserController } from './user.controler';
 
 @Module({
   imports: [
     ClientsModule.register([
       {
-        name: 'BEEF_SERVICE',
+        name: 'KAFKA_CLIENT',
         transport: Transport.KAFKA,
         options: {
           client: {
@@ -18,7 +21,25 @@ import { BeefController } from './beef.controller';
       },
     ]),
   ],
-  controllers: [BeefController],
-  providers: [],
+  controllers: [UserController, BeefController],
+  providers: [{
+    provide: 'PRODUCER',
+    useFactory: async (kafkaClient: ClientKafka): Promise<Producer> => {
+      return await kafkaClient.connect();
+    },
+    inject: ['KAFKA_CLIENT']
+  }],
 })
-export class AppModule {}
+export class AppModule implements OnApplicationShutdown, OnModuleInit {
+  private producer: Producer;
+
+  constructor(private moduleRef: ModuleRef) {}
+
+  async onModuleInit() {
+    this.producer = await this.moduleRef.get('PRODUCER');
+  }
+
+  async onApplicationShutdown(signal?: string) {
+    await this.producer.disconnect()
+  }
+}

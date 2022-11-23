@@ -7,15 +7,17 @@ async function bootstrap() {
     transport: Transport.KAFKA,
     options: {
       client: {
-        clientId: 'beef-consumer',
+        clientId: 'domain-service',
         brokers: ['kafka:9092'],
       },
-      subscribe: {
-        fromBeginning: true,
-      },
-      run: {
-        eachBatchAutoResolve: true
-      },
+      // subscribe: {
+      //   fromBeginning: true,
+      // },
+      // run: {
+      //   eachBatchAutoResolve: true
+      // },
+      // :w
+      //
       consumer: {
         groupId: 'beef'
       }
