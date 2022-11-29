@@ -4,10 +4,10 @@ This project is a experimental Voice Tweet Like application.
 
 * Milestones:
 
-** TODO : Frontend Setup:
+** DONE : Frontend Setup:
 
- 1. TODO : Setup Routing
- 2. TODO : Setup Page structure
+ 1. Setup Routing
+ 2. Setup Page structure
 
 ** TODO : Create User
 
