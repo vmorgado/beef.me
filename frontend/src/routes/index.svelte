@@ -13,7 +13,7 @@
 	import { onMount } from "svelte";
 	import { mdiDotsVertical, mdiMenu } from "@mdi/js";
 	import Beef from "$lib/Beef.svelte";
-	import NewBeef from "$lib/NewBeef.svelte";
+	import CreateBeef from "$lib/CreateBeef.svelte";
 
 	let recorder;
 	let player;
@@ -44,7 +44,7 @@
 	<Container style="max-width: 768px;">
 		<Row>
 			<Col colls={12}>
-				<NewBeef />
+				<CreateBeef />
 			</Col>
 		</Row>
 

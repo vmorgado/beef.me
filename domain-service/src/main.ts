@@ -10,14 +10,13 @@ async function bootstrap() {
         clientId: 'domain-service',
         brokers: ['kafka:9092'],
       },
-      // subscribe: {
-      //   fromBeginning: true,
-      // },
-      // run: {
-      //   eachBatchAutoResolve: true
-      // },
-      // :w
-      //
+      subscribe: {
+        fromBeginning: true,
+      },
+      run: {
+        eachBatchAutoResolve: true
+      },
+
       consumer: {
         groupId: 'beef'
       }

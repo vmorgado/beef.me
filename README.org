@@ -7,7 +7,7 @@ This project is a experimental Voice Tweet Like application.
 ** DONE : Frontend Setup: [2/2]
  1. [X] Setup Routing
  2. [X] Setup Page structure
-** TODO : Create User [1/2]
+** TODO : Create User [1/3]
  1. [X] Backend - Open Endpoint to Create
  2. [ ] Backend - Register Success on Kafka
  3. [ ] Frontend - Write Registration Page

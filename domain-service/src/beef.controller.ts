@@ -1,27 +1,36 @@
 
-import { Controller } from '@nestjs/common';
+import { Controller, Inject } from '@nestjs/common';
 import { Ctx, KafkaContext, MessagePattern, Payload } from '@nestjs/microservices';
+import { Producer } from 'kafkajs';
 import { PrismaService } from './prisma.service';
 
 @Controller()
 export class BeefController {
   constructor(
+    @Inject('PRODUCER')
+    private readonly producer: Producer,
     private prisma: PrismaService
   ) {}
   @MessagePattern('beef.create')
   async newBeef(@Payload() message: any, @Ctx() context: KafkaContext): Promise<void> {
 
-    console.log('message', message.value);
-    // const result = await this.prisma.beef.create({
-    //   data: {
-    //     content: 'Hello World',
-    //     published: true,
-    //     authorId: 'b5cf8941-d987-418f-bde7-1f0ea4249dee'
-    //   }
-    // });
+    const { authorId, content } = message.value;
+    const createdBeef = await this.prisma.beef.create({
+      data: {
+        content,
+        published: true,
+        authorId
+      }
+    });
 
-    // console.log(result);
+    console.log('Created Beef: ', createdBeef);
 
+    const produceResult = this.producer.send({
+      topic: 'beef.created',
+      messages: [{
+        value: JSON.stringify(createdBeef)
+      }]
+    })
   }
 
 }

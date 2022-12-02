@@ -2,11 +2,15 @@ import { Module, OnApplicationShutdown, OnModuleInit } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { ClientKafka, ClientsModule, Transport } from '@nestjs/microservices';
 import { Producer } from '@nestjs/microservices/external/kafka.interface';
+import { MulterModule } from '@nestjs/platform-express';
 import { BeefController } from './beef.controler';
 import { UserController } from './user.controler';
 
 @Module({
   imports: [
+    MulterModule.register({
+      dest: './upload',
+    }),
     ClientsModule.register([
       {
         name: 'KAFKA_CLIENT',
