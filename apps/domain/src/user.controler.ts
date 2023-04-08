@@ -1,6 +1,5 @@
 import { Controller } from '@nestjs/common';
 import { Ctx, KafkaContext, MessagePattern, Payload } from '@nestjs/microservices';
-import { Prisma } from '@prisma/client';
 import { PrismaService } from './prisma.service';
 
 @Controller()
@@ -13,7 +12,7 @@ export class UserController {
 
     try {
 
-      const data: Prisma.UserUncheckedCreateInput = message.value.content;
+      const data = message.value.content;
       const result = await this.prisma.user.create({
         data
       });
