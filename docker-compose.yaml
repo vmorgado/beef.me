@@ -1,29 +1,50 @@
-version: "3.9"
+version: '3.9'
 
 services:
-  # feed-consumer:
-  #   image: node:18-buster
-  #   working_dir: /app
-  #   volumes:
-  #     - ./feed-consumer:/app
-  #   command: ["npm", "run", "start:dev"]
-  domain-service:
+  ### BUILDER
+  ###
+  nx-builder:
     build:
       context: .
-      dockerfile: ./domain-service/Dockerfile
-    working_dir: /app
+      dockerfile: Dockerfile.builder
+    command: ['nx', 'run-many', '--target=build', '--parallel']
     volumes:
-      - ./domain-service:/app
-      - /app/node_modules
-    command: ["npm", "run", "start:dev"]
-  api:
-    image: node:18-buster
+      - app_dist:/builder/dist
+      - modules:/builder/node_modules
+      - ./package.json:/builder/package.json
+      - ./nx.json:/builder/nx.json
+      - ./tsconfig.base.json:/builder/tsconfig.base.json
+      - ./apps:/builder/apps
+      - ./libs:/builder/libs
+      - ./tools:/builder/tools
+
+  ### BROKER
+  ###
+
+  kafka:
+    image: docker.io/bitnami/kafka:3.3
     ports:
-      - "3000:3000"
-    working_dir: /app
+      - '9092:9092'
     volumes:
-      - ./api:/app
-    command: ["npm", "run", "start:dev"]
+      - 'kafka_data:/bitnami'
+    environment:
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
+      - zookeeper
+
+  zookeeper:
+    image: docker.io/bitnami/zookeeper:3.8
+    ports:
+      - '2181:2181'
+    volumes:
+      - 'zookeeper_data:/bitnami'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+
+  ### DATA LAYER
+  ###
+
   database:
     image: postgres:15.1
     environment:
@@ -34,35 +55,58 @@ services:
     volumes:
       - ./data/database:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
-  mongo:
-    image: mongo
-    restart: always
+      - '5432:5432'
+
+  # mongo:
+  #   image: mongo
+  #   restart: always
+  #   ports:
+  #     - "27017:27017"
+  #   volumes:
+  #     - ./data/mongo:/data/db
+
+  ### SERVICE LAYER
+  ###
+
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.runner
+      args:
+        SERVICE_NAME: api
     ports:
-      - "27017:27017"
+      - '3000:3000'
+    working_dir: /app
+    command: ['node', '/app/dist/api/main.js']
     volumes:
-      - ./data/mongo:/data/db
-  zookeeper:
-    image: docker.io/bitnami/zookeeper:3.8
-    ports:
-      - "2181:2181"
-    volumes:
-      - "zookeeper_data:/bitnami"
-    environment:
-      - ALLOW_ANONYMOUS_LOGIN=yes
-  kafka:
-    image: docker.io/bitnami/kafka:3.3
-    ports:
-      - "9092:9092"
-    volumes:
-      - "kafka_data:/bitnami"
-    environment:
-      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
-      - ALLOW_PLAINTEXT_LISTENER=yes
+      - app_dist:/app/dist:ro
+      - modules:/app/node_modules:ro
     depends_on:
+      - nx-builder
+      - database
+      - kafka
       - zookeeper
+
+  # feed-consumer:
+  #   image: node:18-buster
+  #   working_dir: /app
+  #   volumes:
+  #     - ./feed-consumer:/app
+  #   command: ["npm", "run", "start:dev"]
+  # domain-service:
+  #   build:
+  #     context: .
+  #     dockerfile: ./domain-service/Dockerfile
+  #   working_dir: /app
+  #   volumes:
+  #     - ./domain-service:/app
+  #     - /app/node_modules
+  #   command: ["npm", "run", "start:dev"]
+
 volumes:
   zookeeper_data:
     driver: local
   kafka_data:
     driver: local
+  modules:
+  app_dist:
