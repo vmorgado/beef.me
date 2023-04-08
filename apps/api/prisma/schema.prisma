@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "darwin"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email        String        @unique
+  handler      String        @unique
+  name         String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt @default(now())
+  beefs        Beef[]
+  followers    Follower[]    @relation("followers")
+  following    Follower[]    @relation("following")
+}
+
+model Follower {
+  user         User          @relation(name: "followers", fields: [userId], references: [id])
+  userId       String        @db.Uuid
+  follow       User          @relation(name: "following", fields: [followId], references: [id])
+  followId     String        @db.Uuid
+  @@unique([userId, followId])
+
+}
+
+model Beef {
+  id           String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  content      String?
+  published    Boolean?      @default(false)
+  author       User          @relation(fields: [authorId], references: [id])
+  authorId     String        @db.Uuid
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt @default(now())
+}
