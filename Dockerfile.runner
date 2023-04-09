@@ -3,7 +3,6 @@ FROM node:18-buster
 WORKDIR /app
 arg SERVICE_NAME
 
-COPY ./dist/apps/$SERVICE_NAME /app/dist/$SERVICE_NAME
 COPY ./package.json /app/package.json
 RUN npm install
 RUN npm install -g nodemon

@@ -14,7 +14,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@beef/nest-api-gateway": ["libs/nest-api-gateway/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

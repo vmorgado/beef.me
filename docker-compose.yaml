@@ -8,6 +8,8 @@ services:
       context: .
       dockerfile: Dockerfile.builder
     command: ['nx', 'run-many', '--target=build', '--parallel', '--watch']
+    environment:
+      - DATABASE_URL=postgres://beef:changeme@database:5432/beefme
     volumes:
       - app_dist:/builder/dist
       - modules:/builder/node_modules
@@ -89,21 +91,49 @@ services:
       - kafka
       - zookeeper
 
-  # feed-consumer:
-  #   image: node:18-buster
-  #   working_dir: /app
-  #   volumes:
-  #     - ./feed-consumer:/app
-  #   command: ["npm", "run", "start:dev"]
-  # domain-service:
-  #   build:
-  #     context: .
-  #     dockerfile: ./domain-service/Dockerfile
-  #   working_dir: /app
-  #   volumes:
-  #     - ./domain-service:/app
-  #     - /app/node_modules
-  #   command: ["npm", "run", "start:dev"]
+  domain:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.runner
+      args:
+        SERVICE_NAME: domain
+    ports:
+      - '3002:3000'
+    working_dir: /app
+    environment:
+      - DATABASE_URL=postgres://beef:changeme@database:5432/beefme
+      - SERVICE_NAME=domain
+    command: ['nodemon', '--exec', 'node', '/app/dist/apps/domain/main.js']
+    volumes:
+      - app_dist:/app/dist:ro
+      - modules:/app/node_modules:ro
+    depends_on:
+      - nx-builder
+      - database
+      - kafka
+      - zookeeper
+
+  feed-consumer:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.runner
+      args:
+        SERVICE_NAME: feed-consumer
+    ports:
+      - '3001:3000'
+    working_dir: /app
+    environment:
+      - SERVICE_NAME=feed-consumer
+    command:
+      ['nodemon', '--exec', 'node', '/app/dist/apps/feed-consumer/main.js']
+    volumes:
+      - app_dist:/app/dist:ro
+      - modules:/app/node_modules:ro
+    depends_on:
+      - nx-builder
+      - database
+      - kafka
+      - zookeeper
 
 volumes:
   zookeeper_data:
