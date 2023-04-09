@@ -44,6 +44,7 @@ export class AppModule implements OnApplicationShutdown, OnModuleInit {
   }
 
   async onApplicationShutdown(signal?: string) {
+
     await this.producer.disconnect()
   }
 }

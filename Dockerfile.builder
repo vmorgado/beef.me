@@ -11,4 +11,4 @@ COPY ./tools /builder/tools
 RUN npm install
 RUN npm install --global nx@latest
 
-CMD ["nx", "help"]
+CMD ['nx', 'run-many', '--target=build', '--parallel', '--watch']

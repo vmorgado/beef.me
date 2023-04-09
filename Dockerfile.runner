@@ -8,4 +8,4 @@ COPY ./package.json /app/package.json
 RUN npm install
 RUN npm install -g nodemon
 
-CMD ["node", "/app/dist/$SERVICE_NAME/main.js"]
+CMD ["nodemon",  "--exec",  "node",  "/app/dist/apps/$SERVICE_NAME/main.js"]
